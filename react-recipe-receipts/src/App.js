@@ -5,7 +5,7 @@ import RecipeForm from './components/RecipeForm';
 import Header from './components/Header';
 import uniqid from 'uniqid';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row } from 'react-bootstrap';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -50,25 +50,23 @@ export default class App extends Component{
   render() {
     return (
       <Router>
+      <div className="main-background"></div>
         <Header />
-        <Container fluid="xl">
-          <Row>
-            <Routes>
-              <Route exact path="/" element={<RecipeList list={this.state.list}/>}>
-              </Route>
-              <Route path="/add" element={
-                <RecipeForm 
-                          onFormChange={this.handleFormChange} 
-                          onFormSubmit={this.handleFormSubmit} 
-                          formName={this.state.recipe.name}
-                          formDescription={this.state.recipe.description}
-                          formIngredients={this.state.recipe.ingredients}
-                          recipe={this.state.recipe}
-                />}>
-              </Route>
-           </Routes>
-          </Row>
-        </Container>
+              <Routes>
+                <Route exact path="/" element={<RecipeList list={this.state.list}/>}>
+                </Route>
+                <Route path="/add" element={
+                  <RecipeForm 
+                            onFormChange={this.handleFormChange} 
+                            onFormSubmit={this.handleFormSubmit} 
+                            formName={this.state.recipe.name}
+                            formDescription={this.state.recipe.description}
+                            formIngredients={this.state.recipe.ingredients}
+                            recipe={this.state.recipe}
+                  />}>
+                </Route>
+            </Routes>
+        
       </Router>   
     );
   }  
