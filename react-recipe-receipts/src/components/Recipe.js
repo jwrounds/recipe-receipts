@@ -1,24 +1,17 @@
 import React, { Component } from 'react';
+import { Card } from 'react-bootstrap';
+import '../App.css';
 
 export default class Recipe extends Component {
 
   render() {
     return (
-      <>
-        <div>{this.props.number} - Recipe Name: {this.props.name}</div>
-        <div>- - Recipe Description: {this.props.description}</div>
-        { this.props.ingredients.length > 0 &&
-          <>
-            <div>- - Ingredients:  </div>
-            <div>
-              {this.props.ingredients.map((ingredient, index) => {
-                return index < this.props.ingredients.length-1 ? ingredient + ", " : ingredient;
-              })}
-            </div>
-          </>
-        }
-        <hr/>
-      </>
+        <Card className="recipe-card">
+          <Card.Body>
+            <Card.Title>{this.props.name}</Card.Title>
+            <Card.Text>{this.props.description}</Card.Text>
+          </Card.Body>
+        </Card>
     )
   }
 }

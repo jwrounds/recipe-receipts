@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Form, Button, Stack, Col, Row } from 'react-bootstrap';
 import IngredientList from './IngredientList';
+import '../App.css';
+import image from'../project-images/andy-chilton-0JFveX0c778-unsplash.jpg';
 
 export default class RecipeForm extends Component {
   constructor(props) {
@@ -39,12 +41,27 @@ export default class RecipeForm extends Component {
 
   render() {
     return (
-      <Container>
-        <Row>
-          <h1 style={{ padding: "3rem 0", textAlign: "center" }}>Create Your Recipe</h1>
-        </Row>
-        <Row className="justify-content-md-center">
-          <Col md={{ span: 4, offset: 3 }}>
+      <div className="recipe-form-container">
+        <Container >
+        <Row className="recipe-form">
+
+        <Col>
+            <h4>Add ingredients and measurements:</h4>
+            <Form.Group className="mb-3">
+              <Form.Label>Ingredient:</Form.Label>
+              <Stack direction="horizontal" gap={3}>
+                <Form.Control type="text" id="ingredients" />
+                <Button as="input" type="button" variant="secondary" size="sm" id="add" value="Add" onClick={this.handleChange}/>
+              </Stack>
+            </Form.Group>
+
+            <h5>Your ingredients:</h5>
+            <IngredientList formIngredients={this.props.formIngredients}> </IngredientList>
+
+          </Col>
+
+          <Col >
+            <h4>Describe your recipe here:</h4>
             <Form onSubmit={this.handleSubmit}>
               <Form.Group className="mb-3">
                 <Form.Label>Recipe Name:</Form.Label>
@@ -57,24 +74,25 @@ export default class RecipeForm extends Component {
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Ingredient:</Form.Label>
-                <Stack direction="horizontal" gap={3}>
-                  <Form.Control type="text" id="ingredients" />
-                  <Button as="input" type="button" variant="secondary" size="sm" id="add" value="Add" onClick={this.handleChange}/>
-                </Stack>
+                <Form.Label>Recipe instructions:</Form.Label>
+                <Form.Control as="textarea" id="instructions" rows={6} />
               </Form.Group>
-
+              
               <Form.Group className="mb-3">
                 <Form.Control size="sm" type="submit" value="Submit" onSubmit={this.handleSubmit}/>
               </Form.Group>
             </Form>
           </Col>
+          
 
           <Col >
-            <IngredientList formIngredients={this.props.formIngredients}> </IngredientList>
+            <img className="form-image" alt="food" src={image}/>
           </Col>
+
         </Row>
     </Container>
+      </div>
+      
     );
   }
 }

@@ -1,38 +1,52 @@
-.App {
+.header {
+  height: 20vh;
+  background: linear-gradient(to bottom left, rgba(248, 248, 226, .3), rgba(255, 255, 255, 0.0))
+}
+
+.header h1 {
   text-align: center;
+  font-family: Verdana, Geneva, sans-serif;
+  color: rgb(70, 30, 30);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.main-background {
+  background-image: url("./project-images/brooke-lark-08bOYnH_r_E-unsplash.jpg");
+  background-size: 100%;
+  height: 100vh;
+  width: 100%;
+  max-width: 1920px;
+  position: absolute;
+  z-index: -1;
+  filter: blur(5px);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.recipe-form {
+  box-shadow: black;
+  background-color: rgba(230, 231, 216, 0.8);
+  border-radius: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.recipe-form-container {
+  backdrop-filter: blur(2px);
+}
+
+.form-image {
+
+  height: auto; 
+  width: auto; 
+  max-width: 500px; 
+  max-height: 666.6px;
+  border-radius: 10px;
+}
+
+.recipe-card {
+  border-radius: 5px;
+  width: 18rem;
+  height: 15rem;
+}
+
+.card-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: rgb(109, 0, 0);
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  flex-wrap: wrap;
+  gap: 20px;
 }

@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import '../App.css';
 
 export default class Header extends Component {
   render() {
     return (
-<Navbar bg="light" expand="lg">
-  <Container>
-    <Navbar.Brand >Recipe Receipts</Navbar.Brand>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav">
-      <Nav className="me-auto">
-        <Nav.Link>
-          <Link to="/">Home</Link>
-        </Nav.Link> 
-        <Nav.Link>
-          <Link to="/add">Add Recipe</Link>
-        </Nav.Link>
-      </Nav>
-    </Navbar.Collapse>
-  </Container>
-</Navbar>
+      <div className="header">
+        
+        <Nav className="justify-content-end" activeKey="/home">
+          <Nav.Item>
+            <Nav.Link> <Link to="/">Home</Link> </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link> <Link to="/add">Add Recipe</Link> </Nav.Link>
+          </Nav.Item>
+        </Nav>
+        <h1>Recipe Receipts</h1>
+      </div>
+      
     )
   }
 }
