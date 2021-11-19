@@ -34,6 +34,13 @@ public class Recipe {
         this.ingredientList = ingredientList;
     }
 
+    public Recipe(String name, String description, double prepTimeInMinutes, double cookTimeInMinutes) {
+        this.name = name;
+        this.description = description;
+        this.prepTimeInMinutes = prepTimeInMinutes;
+        this.cookTimeInMinutes = cookTimeInMinutes;
+    }
+
     public String getId() {
         return id;
     }
