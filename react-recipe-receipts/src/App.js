@@ -3,7 +3,6 @@ import './App.css';
 import RecipeList from './components/RecipeList';
 import RecipeForm from './components/RecipeForm';
 import Header from './components/Header';
-import uniqid from 'uniqid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import {
@@ -27,9 +26,13 @@ export default class App extends Component{
       }
     }
 
-    this.loadRecipes();
+    this.deleteRecipe = this.deleteRecipe.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadRecipes();
   }
 
   async loadRecipes() {
@@ -41,6 +44,12 @@ export default class App extends Component{
 
   async addRecipe(recipe) {
     let response = await axios.post('http://localhost:8080/api/recipe', recipe)
+    .then((res) => res);
+    console.log(response);
+  }
+
+  async deleteRecipe(id) {
+    let response = await axios.delete('http://localhost:8080/api/recipe/' + id)
     .then((res) => res);
     console.log(response);
   }
@@ -72,7 +81,11 @@ export default class App extends Component{
       <div className="main-background"></div>
         <Header />
               <Routes>
-                <Route exact path="/" element={<RecipeList list={this.state.list}/>}>
+                <Route exact path="/" element={
+                  <RecipeList 
+                            list={this.state.list}
+                            onDelete={this.deleteRecipe}
+                  />}>
                 </Route>
                 <Route path="/add" element={
                   <RecipeForm 
