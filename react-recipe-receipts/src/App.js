@@ -5,13 +5,12 @@ import RecipeForm from './components/RecipeForm';
 import Header from './components/Header';
 import uniqid from 'uniqid';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import axios from 'axios';
 import {
   BrowserRouter as Router,
   Route,
   Routes
 } from 'react-router-dom';
-
 
 export default class App extends Component{
   constructor(props) {
@@ -21,29 +20,49 @@ export default class App extends Component{
       recipe: {
         name: '',
         description: '',
-        ingredients: [],
-        id: uniqid()
+        instructions: '',
+        prepTimeInMinutes: 0,
+        cookTimeInMinutes: 0,
+        ingredientList: []
       }
     }
 
+    this.loadRecipes();
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
+  async loadRecipes() {
+    let data = await axios.get('http://localhost:8080/api/recipe')
+    .then(({ data }) => data);
+    console.log(data);
+    this.setState({ list: data});
+  }
+
+  async addRecipe(recipe) {
+    let response = await axios.post('http://localhost:8080/api/recipe', recipe)
+    .then((res) => res);
+    console.log(response);
+  }
+
   handleFormChange(newRecipe) {
+    console.log(newRecipe);
     this.setState({recipe: newRecipe});
   }
 
   handleFormSubmit() {
-    this.setState({
-      list: this.state.list.concat(this.state.recipe),
-      recipe: {
-        name: '',
-        description: '',
-        ingredients: [],
-        id: uniqid()
-      }
-    });
+    this.addRecipe(this.state.recipe).then(
+      this.setState({
+        recipe: {
+          name: '',
+          description: '',
+          instructions: '',
+          prepTimeInMinutes: 0,
+          cookTimeInMinutes: 0,
+          ingredientList: []
+        }
+      })
+    );
   }
   
 
@@ -61,7 +80,10 @@ export default class App extends Component{
                             onFormSubmit={this.handleFormSubmit} 
                             formName={this.state.recipe.name}
                             formDescription={this.state.recipe.description}
-                            formIngredients={this.state.recipe.ingredients}
+                            formIngredients={this.state.recipe.ingredientList}
+                            formInstructions={this.state.recipe.instructions}
+                            formPrepTime={this.state.recipe.prepTimeInMinutes}
+                            formCookTime={this.state.recipe.cookTimeInMinutes}
                             recipe={this.state.recipe}
                   />}>
                 </Route>

@@ -26,12 +26,7 @@ public class Recipe {
 
     private ArrayList<String> ingredientList;
 
-    public Recipe(String name, String description, double prepTimeInMinutes, double cookTimeInMinutes, ArrayList<String> ingredientList) {
-        this.name = name;
-        this.description = description;
-        this.prepTimeInMinutes = prepTimeInMinutes;
-        this.cookTimeInMinutes = cookTimeInMinutes;
-        this.ingredientList = ingredientList;
+    public Recipe() {
     }
 
     public Recipe(String name, String description, double prepTimeInMinutes, double cookTimeInMinutes) {
@@ -39,6 +34,14 @@ public class Recipe {
         this.description = description;
         this.prepTimeInMinutes = prepTimeInMinutes;
         this.cookTimeInMinutes = cookTimeInMinutes;
+    }
+
+    public Recipe(String name, String description, double prepTimeInMinutes, double cookTimeInMinutes, ArrayList<String> ingredientList) {
+        this.name = name;
+        this.description = description;
+        this.prepTimeInMinutes = prepTimeInMinutes;
+        this.cookTimeInMinutes = cookTimeInMinutes;
+        this.ingredientList = ingredientList;
     }
 
     public String getId() {
