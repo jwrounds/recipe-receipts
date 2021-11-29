@@ -1,73 +1,102 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import RecipeList from './components/RecipeList';
 import RecipeForm from './components/RecipeForm';
 import Header from './components/Header';
-import uniqid from 'uniqid';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import axios from 'axios';
 import {
-  BrowserRouter as Router,
   Route,
-  Routes
+  Routes,
+  useNavigate
 } from 'react-router-dom';
 
+export default function App() {
 
-export default class App extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [], 
-      recipe: {
-        name: '',
-        description: '',
-        ingredients: [],
-        id: uniqid()
-      }
-    }
-
-    this.handleFormChange = this.handleFormChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-  }
-
-  handleFormChange(newRecipe) {
-    this.setState({recipe: newRecipe});
-  }
-
-  handleFormSubmit() {
-    this.setState({
-      list: this.state.list.concat(this.state.recipe),
-      recipe: {
-        name: '',
-        description: '',
-        ingredients: [],
-        id: uniqid()
-      }
+  const [currentRecipe, setCurrentRecipe] = useState({
+      name: '',
+      description: '',
+      instructions: '',
+      prepTimeInMinutes: 0,
+      cookTimeInMinutes: 0,
+      ingredientList: []
     });
+  const [recipeList, setRecipeList] = useState([]);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (recipeList.length === 0) {
+      loadRecipes();
+    }
+  })
+
+  async function loadRecipes() {
+    let data = await axios.get('http://localhost:8080/api/recipe')
+    .then(({ data }) => data);
+    setRecipeList(data);
+  }
+
+  async function addRecipe(recipe) {
+    let response = await axios.post('http://localhost:8080/api/recipe', recipe)
+    .then((res) => res);
+    if (response.status === 201) {
+      navigate("/");
+    }
+  }
+
+  async function deleteRecipe(id) {
+    let response = await axios.delete('http://localhost:8080/api/recipe/' + id)
+    .then((res) => res);
+    if (response.status === 204) {
+      loadRecipes();
+    }
+  }
+
+  function handleFormChange(newRecipe) {
+    console.log(newRecipe);
+    setCurrentRecipe(newRecipe);
+  }
+
+  function handleFormSubmit() {
+    addRecipe(currentRecipe).then(
+      setCurrentRecipe({
+        name: '',
+        description: '',
+        instructions: '',
+        prepTimeInMinutes: 0,
+        cookTimeInMinutes: 0,
+        ingredientList: []
+      })
+    );
   }
   
-
-  render() {
-    return (
-      <Router>
-      <div className="main-background"></div>
-        <Header />
-              <Routes>
-                <Route exact path="/" element={<RecipeList list={this.state.list}/>}>
-                </Route>
-                <Route path="/add" element={
-                  <RecipeForm 
-                            onFormChange={this.handleFormChange} 
-                            onFormSubmit={this.handleFormSubmit} 
-                            formName={this.state.recipe.name}
-                            formDescription={this.state.recipe.description}
-                            formIngredients={this.state.recipe.ingredients}
-                            recipe={this.state.recipe}
-                  />}>
-                </Route>
-            </Routes>
-        
-      </Router>   
-    );
-  }  
+  
+  return (
+    <>
+    <div className="main-background"></div>
+      <Header />
+            <Routes>
+              <Route exact path="/" element={
+                <RecipeList 
+                          list={recipeList}
+                          onDelete={deleteRecipe}
+                />}>
+              </Route>
+              <Route path="/add" element={
+                <RecipeForm 
+                          onFormChange={handleFormChange} 
+                          onFormSubmit={handleFormSubmit} 
+                          formName={currentRecipe.name}
+                          formDescription={currentRecipe.description}
+                          formIngredients={currentRecipe.ingredientList}
+                          formInstructions={currentRecipe.instructions}
+                          formPrepTime={currentRecipe.prepTimeInMinutes}
+                          formCookTime={currentRecipe.cookTimeInMinutes}
+                          recipe={currentRecipe.recipe}
+                />}>
+              </Route>
+          </Routes>
+    </>
+  ); 
+  
 }

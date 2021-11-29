@@ -50,3 +50,9 @@
   flex-wrap: wrap;
   gap: 20px;
 }
+
+.delete {
+  width: 20%;
+  margin: 10px;
+  align-self: flex-end;
+}

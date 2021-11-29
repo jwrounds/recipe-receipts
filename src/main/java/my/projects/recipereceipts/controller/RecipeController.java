@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/recipe")
 public class RecipeController {
@@ -18,28 +19,33 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public ResponseEntity addRecipe(@RequestBody Recipe recipe) {
         recipeService.addRecipe(recipe);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping
     public ResponseEntity<Object> updateRecipe(@RequestBody Recipe recipe) {
         recipeService.updateRecipe(recipe);
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public ResponseEntity<List<Recipe>> getAllRecipes() {
         return ResponseEntity.ok(recipeService.getAllRecipes());
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{name}")
     public ResponseEntity<Recipe> getRecipeByName(@PathVariable String name) {
         return ResponseEntity.ok(recipeService.getRecipeByName(name));
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("/{id}")
     public ResponseEntity deleteRecipe(@PathVariable String id) {
         recipeService.deleteRecipe(id);

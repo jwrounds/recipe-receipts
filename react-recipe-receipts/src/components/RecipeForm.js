@@ -50,7 +50,7 @@ export default class RecipeForm extends Component {
             <Form.Group className="mb-3">
               <Form.Label>Ingredient:</Form.Label>
               <Stack direction="horizontal" gap={3}>
-                <Form.Control type="text" id="ingredients" />
+                <Form.Control type="text" id="ingredientList" />
                 <Button as="input" type="button" variant="secondary" size="sm" id="add" value="Add" onClick={this.handleChange}/>
               </Stack>
             </Form.Group>
@@ -75,9 +75,19 @@ export default class RecipeForm extends Component {
 
               <Form.Group className="mb-3">
                 <Form.Label>Recipe instructions:</Form.Label>
-                <Form.Control as="textarea" id="instructions" rows={6} />
+                <Form.Control as="textarea" id="instructions" rows={6} onChange={this.handleChange}/>
               </Form.Group>
-              
+
+              <Stack direction="horizontal" gap={2}>
+                <Form.Group className="mb-3">
+                    <Form.Label>Prep Time (minutes):</Form.Label>
+                    <Form.Control as="input" type="number" id="prepTimeInMinutes" min="0" max="1000" onChange={this.handleChange}/>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Cooking Time (minutes):</Form.Label>
+                    <Form.Control as="input" type="number" id="cookTimeInMinutes" min="0" max="1000" onChange={this.handleChange}/>
+                </Form.Group>
+              </Stack>
               <Form.Group className="mb-3">
                 <Form.Control size="sm" type="submit" value="Submit" onSubmit={this.handleSubmit}/>
               </Form.Group>

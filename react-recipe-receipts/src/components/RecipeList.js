@@ -10,7 +10,7 @@ export default class RecipeList extends Component {
       <Container>
         <div className="card-container">
           {this.props.list.map((recipe) => 
-            <Recipe key={recipe.id} name={recipe.name} description={recipe.description}/>
+            <Recipe key={recipe.id} id={recipe.id} name={recipe.name} description={recipe.description} onDelete={this.props.onDelete}/>
           )}
         </div>
       </Container>
