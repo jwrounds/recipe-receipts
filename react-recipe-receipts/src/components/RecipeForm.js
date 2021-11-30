@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Container, Form, Button, Stack, Col, Row } from 'react-bootstrap';
 import IngredientList from './IngredientList';
 import '../App.css';
-import image from'../project-images/andy-chilton-0JFveX0c778-unsplash.jpg';
+import TitleCard from './TitleCard';
+import Navbar from './Navbar';
 
 export default class RecipeForm extends Component {
   constructor(props) {
@@ -41,68 +42,60 @@ export default class RecipeForm extends Component {
 
   render() {
     return (
-      <div className="recipe-form-container">
+      <>
         <Container >
-        <Row className="recipe-form">
-
-        <Col>
-            <h4>Add ingredients and measurements:</h4>
-            <Form.Group className="mb-3">
-              <Form.Label>Ingredient:</Form.Label>
-              <Stack direction="horizontal" gap={3}>
-                <Form.Control type="text" id="ingredientList" />
-                <Button as="input" type="button" variant="secondary" size="sm" id="add" value="Add" onClick={this.handleChange}/>
-              </Stack>
-            </Form.Group>
-
-            <h5>Your ingredients:</h5>
-            <IngredientList formIngredients={this.props.formIngredients}> </IngredientList>
-
-          </Col>
-
-          <Col >
-            <h4>Describe your recipe here:</h4>
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Group className="mb-3">
-                <Form.Label>Recipe Name:</Form.Label>
-                <Form.Control type="text" id="name" value={this.props.formName} onChange={this.handleChange}/>
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Recipe Description:</Form.Label>
-                <Form.Control as="textarea" id="description" rows={3} value={this.props.formDescription} onChange={this.handleChange}/>
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Recipe instructions:</Form.Label>
-                <Form.Control as="textarea" id="instructions" rows={6} onChange={this.handleChange}/>
-              </Form.Group>
-
-              <Stack direction="horizontal" gap={2}>
+          <TitleCard title="Add Your Recipe" tagline="We know it's going to be delicious"/>
+          <Row className="recipe-form">
+            <Col sm="auto">
+              <h4>Describe your recipe here:</h4>
+              <Form id="recipeForm" onSubmit={this.handleSubmit}>
                 <Form.Group className="mb-3">
-                    <Form.Label>Prep Time (minutes):</Form.Label>
-                    <Form.Control as="input" type="number" id="prepTimeInMinutes" min="0" max="1000" onChange={this.handleChange}/>
+                  <Form.Label>Recipe Name:</Form.Label>
+                  <Form.Control type="text" id="name" value={this.props.formName} onChange={this.handleChange}/>
                 </Form.Group>
+
                 <Form.Group className="mb-3">
-                    <Form.Label>Cooking Time (minutes):</Form.Label>
-                    <Form.Control as="input" type="number" id="cookTimeInMinutes" min="0" max="1000" onChange={this.handleChange}/>
+                  <Form.Label>Recipe Description:</Form.Label>
+                  <Form.Control as="textarea" id="description" rows={3} value={this.props.formDescription} onChange={this.handleChange}/>
                 </Form.Group>
-              </Stack>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Recipe instructions:</Form.Label>
+                  <Form.Control as="textarea" id="instructions" rows={6} onChange={this.handleChange}/>
+                </Form.Group>
+
+                <Stack direction="horizontal" gap={2}>
+                  <Form.Group className="mb-3">
+                      <Form.Label>Prep Time (minutes):</Form.Label>
+                      <Form.Control as="input" type="number" id="prepTimeInMinutes" min="0" max="1000" onChange={this.handleChange}/>
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                      <Form.Label>Cooking Time (minutes):</Form.Label>
+                      <Form.Control as="input" type="number" id="cookTimeInMinutes" min="0" max="1000" onChange={this.handleChange}/>
+                  </Form.Group>
+                </Stack>
+              </Form>
+            </Col>
+
+            <Col sm={4}>
+              <h4>Add ingredients and measurements:</h4>
               <Form.Group className="mb-3">
-                <Form.Control size="sm" type="submit" value="Submit" onSubmit={this.handleSubmit}/>
+                <Form.Label>Ingredient:</Form.Label>
+                <Stack direction="horizontal" gap={3}>
+                  <Form.Control type="text" id="ingredientList" />
+                  <Button as="input" type="button" variant="secondary" size="sm" id="add" value="Add" onClick={this.handleChange}/>
+                </Stack>
               </Form.Group>
-            </Form>
-          </Col>
-          
 
-          <Col >
-            <img className="form-image" alt="food" src={image}/>
-          </Col>
-
-        </Row>
-    </Container>
-      </div>
-      
+              <h5>Your ingredients:</h5>
+              <IngredientList formIngredients={this.props.formIngredients}> </IngredientList>
+            </Col>
+          </Row>
+          <Row className="submit-container">
+            <Button className="form-submit" variant="primary" size="lg" type="submit" form="recipeForm" onSubmit={this.handleSubmit}>Submit</Button>
+          </Row>
+        </Container>
+      </>
     );
   }
 }

@@ -10,6 +10,10 @@ import {
   Routes,
   useNavigate
 } from 'react-router-dom';
+import TitleCard from './components/TitleCard';
+import Footer from './components/Footer';
+import Landing from './components/Landing';
+import Navbar from './components/Navbar';
 
 export default function App() {
 
@@ -73,29 +77,30 @@ export default function App() {
   
   return (
     <>
-    <div className="main-background"></div>
-      <Header />
-            <Routes>
-              <Route exact path="/" element={
-                <RecipeList 
-                          list={recipeList}
-                          onDelete={deleteRecipe}
-                />}>
-              </Route>
-              <Route path="/add" element={
-                <RecipeForm 
-                          onFormChange={handleFormChange} 
-                          onFormSubmit={handleFormSubmit} 
-                          formName={currentRecipe.name}
-                          formDescription={currentRecipe.description}
-                          formIngredients={currentRecipe.ingredientList}
-                          formInstructions={currentRecipe.instructions}
-                          formPrepTime={currentRecipe.prepTimeInMinutes}
-                          formCookTime={currentRecipe.cookTimeInMinutes}
-                          recipe={currentRecipe.recipe}
-                />}>
-              </Route>
-          </Routes>
+    <Navbar />
+      <Routes>
+        <Route exact path="/" element={
+          <Landing />}>
+        </Route>
+        <Route exact path="/list" element={
+          <RecipeList 
+                    list={recipeList}
+                    onDelete={deleteRecipe} />}>
+        </Route>
+        <Route path="/add" element={
+          <RecipeForm 
+                    onFormChange={handleFormChange} 
+                    onFormSubmit={handleFormSubmit} 
+                    formName={currentRecipe.name}
+                    formDescription={currentRecipe.description}
+                    formIngredients={currentRecipe.ingredientList}
+                    formInstructions={currentRecipe.instructions}
+                    formPrepTime={currentRecipe.prepTimeInMinutes}
+                    formCookTime={currentRecipe.cookTimeInMinutes}
+                    recipe={currentRecipe} />}>
+        </Route>
+      </Routes>
+      <Footer />
     </>
   ); 
   
