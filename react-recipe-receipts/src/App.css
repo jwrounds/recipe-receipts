@@ -1,42 +1,59 @@
+html {
+  min-height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  background-color: #efefef;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.App {
+  height: 100%;
+}
+
+.navbar, footer {
+  flex-shrink: 0;
+}
+
 .header {
-  height: 20vh;
-  background: linear-gradient(to bottom left, rgba(248, 248, 226, .3), rgba(255, 255, 255, 0.0))
+  width: 100vw;
 }
 
-.header h1 {
-  text-align: center;
-  font-family: Verdana, Geneva, sans-serif;
-  color: rgb(70, 30, 30);
+.header-img-container {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.main-background {
-  background-image: url("./project-images/brooke-lark-08bOYnH_r_E-unsplash.jpg");
-  background-size: 100%;
-  height: 100vh;
+.navbar {
   width: 100%;
-  max-width: 1920px;
-  position: absolute;
-  z-index: -1;
-  filter: blur(5px);
+  height: 60px;
+  background-color: #f5f5f5;  
 }
 
-.recipe-form {
-  box-shadow: black;
-  background-color: rgba(230, 231, 216, 0.8);
-  border-radius: 10px;
+.title-card {
+  margin: 5%;
 }
 
-.recipe-form-container {
-  backdrop-filter: blur(2px);
+.title-card > * {
+  text-align: center;
 }
 
-.form-image {
+.recipe-form, .submit-container {
+  justify-content: center;
+  padding-top: 2rem;
+}
 
-  height: auto; 
-  width: auto; 
-  max-width: 500px; 
-  max-height: 666.6px;
-  border-radius: 10px;
+.form-submit {
+  flex-basis: 30%;
 }
 
 .recipe-card {
@@ -45,14 +62,36 @@
   height: 15rem;
 }
 
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-text {
+  overflow: auto;
+  height: 100px;
+}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: space-between;
 }
 
 .delete {
-  width: 20%;
-  margin: 10px;
+  width: 30%;
   align-self: flex-end;
+}
+
+footer {
+  display: flex;
+  margin-top: 5%;
+  flex-direction: row-reverse;
+  background-color: #f5f5f5;
+}
+
+footer > p {
+  width: max-content;
+  margin: 20px;
 }

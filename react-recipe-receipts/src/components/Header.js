@@ -1,24 +1,18 @@
-import React, { Component } from 'react';
-import { Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import Navbar from './Navbar';
+import headerImgOne from '../images/toa-heftiba-oQvESMKUkzM-unsplash.jpeg';
+import headerImgTwo from '../images/icons8-team-seDjj4dmC9s-unsplash.jpg';
+import headerImgThree from '../images/fernando-andrade-sEi3apr6Vys-unsplash.jpg'
 import '../App.css';
 
-export default class Header extends Component {
-  render() {
-    return (
-      <div className="header">
-        
-        <Nav className="justify-content-end" activeKey="/home">
-          <Nav.Item>
-            <Nav.Link> <Link to="/">Home</Link> </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link> <Link to="/add">Add Recipe</Link> </Nav.Link>
-          </Nav.Item>
-        </Nav>
-        <h1>Recipe Receipts</h1>
-      </div>
-      
-    )
-  }
+export default function Header(){
+  return (
+    <div className="header">
+      <div className="header-img-container">
+        <img className="header-img-1" src={headerImgOne} alt="A pan, herbs and spices."></img>
+        <img className="header-img-3" src={headerImgThree} alt="A block of ramen noodles."></img>
+        <img className="header-img-2" src={headerImgTwo} alt="Pots, pans, and vegetables."></img>
+      </div> 
+    </div>  
+  )
 }
