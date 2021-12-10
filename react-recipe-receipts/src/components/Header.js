@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from './Navbar';
 import headerImgOne from '../images/toa-heftiba-oQvESMKUkzM-unsplash.jpeg';
 import headerImgTwo from '../images/icons8-team-seDjj4dmC9s-unsplash.jpg';
 import headerImgThree from '../images/fernando-andrade-sEi3apr6Vys-unsplash.jpg'

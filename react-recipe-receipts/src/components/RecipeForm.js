@@ -3,7 +3,6 @@ import { Container, Form, Button, Stack, Col, Row } from 'react-bootstrap';
 import IngredientList from './IngredientList';
 import '../App.css';
 import TitleCard from './TitleCard';
-import Navbar from './Navbar';
 
 export default class RecipeForm extends Component {
   constructor(props) {
