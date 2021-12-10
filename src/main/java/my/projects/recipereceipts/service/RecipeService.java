@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecipeService {
@@ -23,8 +24,8 @@ public class RecipeService {
 
     public void updateRecipe(Recipe recipe) {
         Recipe savedRecipe = recipeRepository.findById(recipe.getId()).
-                orElseThrow(() -> new RuntimeException(
-                        String.format("Cannot find recipe by ID %s", recipe.getId())));
+            orElseThrow(() -> new RuntimeException(
+                String.format("Cannot find recipe by ID %s", recipe.getId())));
 
         savedRecipe.setName(recipe.getName());
         savedRecipe.setDescription(recipe.getDescription());
@@ -41,8 +42,14 @@ public class RecipeService {
 
     public Recipe getRecipeByName(String name) {
         return recipeRepository.findByName(name).
-                orElseThrow(() -> new RuntimeException(
-                        String.format("Cannot find recipe by name %s", name)));
+            orElseThrow(() -> new RuntimeException(
+                String.format("Cannot find recipe by name %s", name)));
+    }
+
+    public Recipe getRecipeById(String id) {
+        return recipeRepository.findById(id).
+            orElseThrow(() -> new RuntimeException(
+                String.format("Cannot find recipe by id %s", id)));
     }
 
     public void deleteRecipe(String id) {

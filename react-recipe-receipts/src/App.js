@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import RecipeList from './components/RecipeList';
 import RecipeForm from './components/RecipeForm';
-import Header from './components/Header';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Recipe from './components/Recipe';
 import axios from 'axios';
 import {
   Route,
   Routes,
   useNavigate
 } from 'react-router-dom';
-import TitleCard from './components/TitleCard';
 import Footer from './components/Footer';
 import Landing from './components/Landing';
 import Navbar from './components/Navbar';
 
 export default function App() {
 
-  const [currentRecipe, setCurrentRecipe] = useState({
+  const [recipeInForm, setRecipeInForm] = useState({
       name: '',
       description: '',
       instructions: '',
@@ -26,6 +25,7 @@ export default function App() {
       ingredientList: []
     });
   const [recipeList, setRecipeList] = useState([]);
+  const [currentRecipe, setCurrentRecipe] = useState();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -36,34 +36,56 @@ export default function App() {
 
   async function loadRecipes() {
     let data = await axios.get('http://localhost:8080/api/recipe')
-    .then(({ data }) => data);
+      .then(({ data }) => data);
     setRecipeList(data);
+  }
+
+  async function loadRecipe(id) {
+    let data = await axios.get(`http://localhost:8080/api/recipe/view/${id}`)
+      .then(({ data }) => data);
+    console.log(data);
+    setCurrentRecipe(data);
   }
 
   async function addRecipe(recipe) {
     let response = await axios.post('http://localhost:8080/api/recipe', recipe)
     .then((res) => res);
     if (response.status === 201) {
-      navigate("/");
+      navigate("/recipes");
+    }
+  }
+
+  async function updateRecipe(recipe) {
+    let response = await axios.post('http://localhost:8080/api/recipe', recipe)
+    .then((res) => res);
+    if (response.status === 201) {
+      navigate(`/recipes/${recipe.id}`);
     }
   }
 
   async function deleteRecipe(id) {
-    let response = await axios.delete('http://localhost:8080/api/recipe/' + id)
+    let response = await axios.delete(`http://localhost:8080/api/recipe/${id}`)
     .then((res) => res);
     if (response.status === 204) {
       loadRecipes();
     }
   }
 
+  function handleRecipeDetailView(recipeId) {
+    loadRecipe(recipeId);
+  }
+
+  function handleRecipeUpdate(recipe) {
+    updateRecipe(recipe);
+  }
+
   function handleFormChange(newRecipe) {
-    console.log(newRecipe);
-    setCurrentRecipe(newRecipe);
+    setRecipeInForm(newRecipe);
   }
 
   function handleFormSubmit() {
-    addRecipe(currentRecipe).then(
-      setCurrentRecipe({
+    addRecipe(recipeInForm).then(
+      setRecipeInForm({
         name: '',
         description: '',
         instructions: '',
@@ -77,31 +99,33 @@ export default function App() {
   
   return (
     <>
-    <Navbar />
+      <Navbar />
       <Routes>
         <Route exact path="/" element={
-          <Landing />}>
-        </Route>
-        <Route exact path="/list" element={
+          <Landing />} />
+        <Route exact path="/recipes" element={
           <RecipeList 
                     list={recipeList}
-                    onDelete={deleteRecipe} />}>
-        </Route>
+                    onRecipeClick={handleRecipeDetailView}/>}/>
+        <Route path="/recipes/:id" element={
+          <Recipe recipe={currentRecipe} 
+                    getRecipeId={handleRecipeDetailView}
+                    onDelete={deleteRecipe}
+                    onRecipeUpdate={handleRecipeUpdate} />} />
         <Route path="/add" element={
           <RecipeForm 
                     onFormChange={handleFormChange} 
                     onFormSubmit={handleFormSubmit} 
-                    formName={currentRecipe.name}
-                    formDescription={currentRecipe.description}
-                    formIngredients={currentRecipe.ingredientList}
-                    formInstructions={currentRecipe.instructions}
-                    formPrepTime={currentRecipe.prepTimeInMinutes}
-                    formCookTime={currentRecipe.cookTimeInMinutes}
-                    recipe={currentRecipe} />}>
-        </Route>
+                    formName={recipeInForm.name}
+                    formDescription={recipeInForm.description}
+                    formIngredients={recipeInForm.ingredientList}
+                    formInstructions={recipeInForm.instructions}
+                    formPrepTime={recipeInForm.prepTimeInMinutes}
+                    formCookTime={recipeInForm.cookTimeInMinutes}
+                    recipe={recipeInForm} />} />
       </Routes>
       <Footer />
     </>
   ); 
-  
+ 
 }

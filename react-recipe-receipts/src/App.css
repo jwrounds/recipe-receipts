@@ -39,6 +39,10 @@ body {
   background-color: #f5f5f5;  
 }
 
+.navbar > div {
+  margin: 10px;
+}
+
 .title-card {
   margin: 5%;
 }
@@ -75,13 +79,12 @@ body {
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-between;
+  gap: 20px; 
 }
 
-.delete {
-  width: 30%;
-  align-self: flex-end;
+.recipe-detail-container {
+  display: flex;
+  flex-direction: column;
 }
 
 footer {

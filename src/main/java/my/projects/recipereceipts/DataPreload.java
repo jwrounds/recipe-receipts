@@ -51,7 +51,7 @@ public class DataPreload {
                 streetTacosIngredients.add("Onion");
                 streetTacosIngredients.add("Cilantro");
                 streetTacosIngredients.add("Fresh limes");
-                Recipe streetTacos = new Recipe("Shredded Chicken Street Tacos", "Street tacos loaded with perfectly seasoned shredded chicken, diced onions, and topped with cilantro and lime juice.", 30, 55);
+                Recipe streetTacos = new Recipe("Shredded Chicken Street Tacos", "Street tacos loaded with perfectly seasoned shredded chicken, diced onions, and topped with cilantro and lime juice.", 30, 55, streetTacosIngredients);
 
                 log.info("Preloading... " + recipeRepository.insert(streetTacos));
             }
