@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Document("recipes")
 public class Recipe {
@@ -17,6 +18,8 @@ public class Recipe {
     private String name;
 
     private String description;
+
+    private String instructions;
 
     @Field(name = "prepTime")
     private double prepTimeInMinutes;
@@ -68,6 +71,14 @@ public class Recipe {
         this.description = description;
     }
 
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
     public double getPrepTimeInMinutes() {
         return prepTimeInMinutes;
     }
@@ -90,5 +101,31 @@ public class Recipe {
 
     public void setIngredientList(ArrayList<String> ingredientList) {
         this.ingredientList = ingredientList;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", instructions='" + instructions + '\'' +
+            ", prepTimeInMinutes=" + prepTimeInMinutes +
+            ", cookTimeInMinutes=" + cookTimeInMinutes +
+            ", ingredientList=" + ingredientList +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return Double.compare(recipe.prepTimeInMinutes, prepTimeInMinutes) == 0 && Double.compare(recipe.cookTimeInMinutes, cookTimeInMinutes) == 0 && id.equals(recipe.id) && name.equals(recipe.name) && description.equals(recipe.description) && instructions.equals(recipe.instructions) && ingredientList.equals(recipe.ingredientList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, instructions, prepTimeInMinutes, cookTimeInMinutes, ingredientList);
     }
 }
