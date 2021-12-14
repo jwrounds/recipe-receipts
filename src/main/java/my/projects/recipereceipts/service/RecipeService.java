@@ -29,10 +29,13 @@ public class RecipeService {
 
         savedRecipe.setName(recipe.getName());
         savedRecipe.setDescription(recipe.getDescription());
+        savedRecipe.setInstructions(recipe.getInstructions());
         savedRecipe.setPrepTimeInMinutes(recipe.getPrepTimeInMinutes());
         savedRecipe.setCookTimeInMinutes(recipe.getCookTimeInMinutes());
         savedRecipe.setIngredientList(recipe.getIngredientList());
 
+        System.out.println(savedRecipe.toString());
+        System.out.println(recipe.toString());
         recipeRepository.save(savedRecipe);
     }
 
