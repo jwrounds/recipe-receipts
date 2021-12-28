@@ -76,6 +76,7 @@ export default function App() {
     .then((res) => res);
     if (response.status === 204) {
       loadRecipes();
+      navigate("/recipes");
     }
   }
 
