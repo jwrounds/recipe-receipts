@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router';
 import {
   Route,
   Routes,
@@ -32,19 +31,10 @@ export default function App() {
   const [recipeList, setRecipeList] = useState([]);
   const [currentRecipe, setCurrentRecipe] = useState();
   const navigate = useNavigate();
-
-
-  console.log(recipeInEdit, currentRecipe);
   
   useEffect(() => {
     if (recipeList.length === 0) {
       loadRecipes();
-    }
-
-    if (currentRecipe && !recipeInEdit) {
-      setRecipeInEdit(currentRecipe);
-    } else if (recipeInEdit && (recipeInEdit.id !== currentRecipe.id)) {
-      setRecipeInEdit(currentRecipe);
     }
   })
 
@@ -57,8 +47,8 @@ export default function App() {
   async function loadRecipe(id) {
     let data = await axios.get(`http://localhost:8080/api/recipe/view/${id}`)
       .then(({ data }) => data);
-    console.log(data);
     setCurrentRecipe(data);
+    setRecipeInEdit(data);
   }
 
   async function addRecipe(recipe) {
@@ -75,6 +65,7 @@ export default function App() {
     .then((res) => {
       if (res.status === 200) {
         loadRecipe(recipe.id);
+        loadRecipes();
         navigate(`recipes/${recipe.id}`);
       }
     });
@@ -88,17 +79,6 @@ export default function App() {
     }
   }
 
-  function resetRecipeInForm() {
-    setRecipeInForm(Object.assign({}, recipeTemplate)); 
-  }
-
-  function handleRecipeDetailView(recipeId) {
-    loadRecipe(recipeId);
-  }
-
-  function handleRecipeEdit(recipeId) {
-    loadRecipe(recipeId);
-  }
 
   function handleFormChange(newRecipe, formType) {
     if (formType === 'add') {
@@ -114,11 +94,11 @@ export default function App() {
         setRecipeInForm(Object.assign({}, recipeTemplate))
       );
     } else if (formType === 'edit') {
-      updateRecipe(recipeInEdit).then(
-        setRecipeInEdit(Object.assign({}, recipeTemplate))
-      );
+      updateRecipe(recipeInEdit);
     }
   }
+
+  console.log(recipeList);
   
   return (
     <>
@@ -129,10 +109,10 @@ export default function App() {
         <Route exact path="/recipes" element={
           <RecipeList 
                     list={recipeList}
-                    onRecipeClick={handleRecipeDetailView}/>}/>
+                    onRecipeClick={loadRecipe}/>}/>
         <Route path="/recipes/:id" element={
           <RecipeContainer                   
-                    getRecipeById={handleRecipeDetailView}
+                    getRecipeById={loadRecipe}
                     onDelete={deleteRecipe}
                     onFormChange={handleFormChange}
                     onFormSubmit={handleFormSubmit} 
@@ -140,7 +120,7 @@ export default function App() {
                     recipeInForm={recipeInForm} />} />
         <Route path="/recipes/:id/edit" element={ 
           <RecipeEdit 
-                    getRecipe={handleRecipeEdit}
+                    getRecipe={loadRecipe}
                     onFormChange={handleFormChange}
                     onFormSubmit={handleFormSubmit} 
                     recipe={recipeInEdit}/>} />
