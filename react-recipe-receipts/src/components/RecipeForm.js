@@ -24,7 +24,7 @@ export default function RecipeForm(props) {
 
             <Form.Group className="mb-3">
               <Form.Label>Recipe instructions:</Form.Label>
-              <Form.Control as="textarea" id="instructions" rows={6} onChange={props.onFormChange}/>
+              <Form.Control as="textarea" id="instructions" rows={6} value={props.recipe.instructions} onChange={props.onFormChange}/>
             </Form.Group>
 
             <Stack direction="horizontal" gap={2}>
