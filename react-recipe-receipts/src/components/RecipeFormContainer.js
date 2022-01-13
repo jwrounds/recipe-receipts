@@ -23,7 +23,7 @@ export default function RecipeFormContainer(props) {
       newRecipe[key] = value;
     }
     console.log(newRecipe);
-    props.onFormChange(newRecipe);
+    props.onFormChange(newRecipe, props.formId);
   }
 
   function handleSubmit(e) {

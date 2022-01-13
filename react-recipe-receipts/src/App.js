@@ -1,32 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import {
   Route,
   Routes,
   useNavigate
 } from 'react-router-dom';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/Footer';
 import Landing from './components/Landing';
 import Navbar from './components/Navbar';
 import RecipeList from './components/RecipeList';
 import RecipeFormContainer from './components/RecipeFormContainer';
 import RecipeContainer from './components/RecipeContainer';
+import RecipeEdit from './components/RecipeEdit';
 
-export default function App() {
+export default function App() { 
 
-  const [recipeInForm, setRecipeInForm] = useState({
-      name: '',
-      description: '',
-      instructions: '',
-      prepTimeInMinutes: 0,
-      cookTimeInMinutes: 0,
-      ingredientList: []
-    });
+  const recipeTemplate = {
+    name: '',
+    description: '',
+    instructions: '',
+    prepTimeInMinutes: 0,
+    cookTimeInMinutes: 0,
+    ingredientList: []
+  };
+
+  const [recipeInForm, setRecipeInForm] = useState(Object.assign({}, recipeTemplate));
+  const [recipeInEdit, setRecipeInEdit] = useState();
   const [recipeList, setRecipeList] = useState([]);
   const [currentRecipe, setCurrentRecipe] = useState();
-  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -45,10 +48,11 @@ export default function App() {
     let data = await axios.get(`http://localhost:8080/api/recipe/view/${id}`)
       .then(({ data }) => data);
     setCurrentRecipe(data);
+    setRecipeInEdit(data);
   }
 
   async function addRecipe(recipe) {
-    let response = await axios.post('http://localhost:8080/api/recipe', recipe)
+    let response = await axios.post('http://localhost:8080/api/recipe/add', recipe)
     .then((res) => res);
     if (response.status === 201) {
       navigate("/recipes");
@@ -57,12 +61,12 @@ export default function App() {
   }
 
   async function updateRecipe(recipe) {
-    console.log(recipeInForm, recipe);
-    let response = await axios.put('http://localhost:8080/api/recipe', recipe)
+    await axios.put('http://localhost:8080/api/recipe', recipe)
     .then((res) => {
       if (res.status === 200) {
-        setIsEditing(false);
         loadRecipe(recipe.id);
+        loadRecipes();
+        navigate(`recipes/${recipe.id}`);
       }
     });
   }
@@ -72,45 +76,30 @@ export default function App() {
     .then((res) => res);
     if (response.status === 204) {
       loadRecipes();
+      navigate("/recipes");
     }
   }
 
-  function resetRecipeInForm() {
-    setRecipeInForm({
-      name: '',
-      description: '',
-      instructions: '',
-      prepTimeInMinutes: 0,
-      cookTimeInMinutes: 0,
-      ingredientList: []
-    });
+
+  function handleFormChange(newRecipe, formType) {
+    if (formType === 'add') {
+      setRecipeInForm(newRecipe);
+    } else if (formType === 'edit') {
+      setRecipeInEdit(newRecipe);
+    }
   }
 
-  function handleRecipeDetailView(recipeId) {
-    loadRecipe(recipeId);
-  }
-
-  function handleRecipeEdit() {
-    setIsEditing(true);
-    setRecipeInForm(currentRecipe);
-  }
-
-  function handleFormChange(newRecipe) {
-    setRecipeInForm(newRecipe);
-  }
-
-  function handleFormSubmit(type) {
-    if (type === 'add') {
+  function handleFormSubmit(formType) {
+    if (formType === 'add') {
       addRecipe(recipeInForm).then(
-        resetRecipeInForm()
+        setRecipeInForm(Object.assign({}, recipeTemplate))
       );
-    } else if (type === 'edit') {
-      updateRecipe(recipeInForm).then(
-        resetRecipeInForm()
-      );
+    } else if (formType === 'edit') {
+      updateRecipe(recipeInEdit);
     }
   }
-  
+
+  console.log(recipeList);
   
   return (
     <>
@@ -121,17 +110,21 @@ export default function App() {
         <Route exact path="/recipes" element={
           <RecipeList 
                     list={recipeList}
-                    onRecipeClick={handleRecipeDetailView}/>}/>
+                    onRecipeClick={loadRecipe}/>}/>
         <Route path="/recipes/:id" element={
           <RecipeContainer                   
-                    getRecipeId={handleRecipeDetailView}
-                    isEditing={isEditing}
+                    getRecipeById={loadRecipe}
                     onDelete={deleteRecipe}
-                    onEdit={handleRecipeEdit}
                     onFormChange={handleFormChange}
                     onFormSubmit={handleFormSubmit} 
                     recipe={currentRecipe}
                     recipeInForm={recipeInForm} />} />
+        <Route path="/recipes/:id/edit" element={ 
+          <RecipeEdit 
+                    getRecipe={loadRecipe}
+                    onFormChange={handleFormChange}
+                    onFormSubmit={handleFormSubmit} 
+                    recipe={recipeInEdit}/>} />
         <Route path="/add" element={
           <RecipeFormContainer 
                     title="Add Your Recipe"

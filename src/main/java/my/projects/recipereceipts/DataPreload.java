@@ -1,16 +1,16 @@
 package my.projects.recipereceipts;
 
-
+import my.projects.recipereceipts.model.ERole;
 import my.projects.recipereceipts.model.Recipe;
+import my.projects.recipereceipts.model.Role;
 import my.projects.recipereceipts.repository.RecipeRepository;
+import my.projects.recipereceipts.repository.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import java.util.ArrayList;
-
 
 @Configuration
 public class DataPreload {
@@ -19,8 +19,16 @@ public class DataPreload {
     public DataPreload() { }
 
     @Bean
-    CommandLineRunner initDatabase(RecipeRepository recipeRepository) {
+    CommandLineRunner initDatabase(RecipeRepository recipeRepository, RoleRepository roleRepository) {
         return args -> {
+
+            if (roleRepository.findAll().isEmpty()) {
+                Role userRole = new Role(ERole.ROLE_USER);
+                Role adminRole = new Role(ERole.ROLE_ADMIN);
+
+                roleRepository.save(userRole);
+                roleRepository.save(adminRole);
+            }
 
             if (recipeRepository.findAll().isEmpty()) {
 
