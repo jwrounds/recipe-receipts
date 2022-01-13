@@ -20,14 +20,14 @@ public class RecipeController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<?> addRecipe(@RequestBody Recipe recipe) {
         recipeService.addRecipe(recipe);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateRecipe(@RequestBody Recipe recipe) {
         recipeService.updateRecipe(recipe);
         return ResponseEntity.ok().build();
@@ -52,7 +52,7 @@ public class RecipeController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteRecipe(@PathVariable String id) {
         recipeService.deleteRecipe(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

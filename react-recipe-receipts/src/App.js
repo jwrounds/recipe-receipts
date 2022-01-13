@@ -52,7 +52,7 @@ export default function App() {
   }
 
   async function addRecipe(recipe) {
-    let response = await axios.post('http://localhost:8080/api/recipe', recipe)
+    let response = await axios.post('http://localhost:8080/api/recipe/add', recipe)
     .then((res) => res);
     if (response.status === 201) {
       navigate("/recipes");

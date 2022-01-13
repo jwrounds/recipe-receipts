@@ -34,8 +34,6 @@ public class RecipeService {
         savedRecipe.setCookTimeInMinutes(recipe.getCookTimeInMinutes());
         savedRecipe.setIngredientList(recipe.getIngredientList());
 
-        System.out.println(savedRecipe.toString());
-        System.out.println(recipe.toString());
         recipeRepository.save(savedRecipe);
     }
 
