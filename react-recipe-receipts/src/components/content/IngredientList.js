@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import uniqid from 'uniqid';
-import '../App.css';
+import '../../App.css';
 
 
 export default function IngredientList({formIngredients}) {

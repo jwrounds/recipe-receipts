@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Form, Button, Stack, Col, Row } from 'react-bootstrap';
-import '../App.css';
-import IngredientList from './IngredientList';
-import TitleCard from './TitleCard';
+import '../../App.css';
+import IngredientList from '../content/IngredientList';
+import TitleCard from '../content/TitleCard';
 
 export default function RecipeForm(props) {
   return (

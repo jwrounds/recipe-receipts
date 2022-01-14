@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
-import '../App.css';
+import '../../App.css';
 
 export default function RecipeCard(props) {
   return (

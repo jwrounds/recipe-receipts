@@ -10,9 +10,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/navigation/Footer';
 import Landing from './components/layout/Landing';
 import Navbar from './components/navigation/Navbar';
-import RecipeList from './components/RecipeList';
-import RecipeFormContainer from './components/RecipeFormContainer';
-import RecipeContainer from './components/RecipeContainer';
+import RecipeList from './components/content/RecipeList';
+import RecipeFormContainer from './components/forms/RecipeFormContainer';
+import RecipeContainer from './components/content/RecipeContainer';
 import RecipeEdit from './components/forms/RecipeEdit';
 
 export default function App() { 
