@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Footer from './components/Footer';
-import Landing from './components/Landing';
-import Navbar from './components/Navbar';
+import Footer from './components/navigation/Footer';
+import Landing from './components/layout/Landing';
+import Navbar from './components/navigation/Navbar';
 import RecipeList from './components/RecipeList';
 import RecipeFormContainer from './components/RecipeFormContainer';
 import RecipeContainer from './components/RecipeContainer';
-import RecipeEdit from './components/RecipeEdit';
+import RecipeEdit from './components/forms/RecipeEdit';
 
 export default function App() { 
 

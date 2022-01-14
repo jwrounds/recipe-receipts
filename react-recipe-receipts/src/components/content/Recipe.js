@@ -4,7 +4,6 @@ import uniqid from 'uniqid';
 import { Link } from 'react-router-dom';
 
 export default function Recipe(props) {
-
     return (
       <Container className="recipe-detail-container">
         <Stack direction="horizontal" gap={3} style={{ alignSelf: "flex-end"}}>
