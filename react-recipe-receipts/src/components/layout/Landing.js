@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import TitleCard from './TitleCard';
+import TitleCard from '../content/TitleCard';
 
 export default function Landing() {
     return (
