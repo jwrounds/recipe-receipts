@@ -2,8 +2,12 @@ import React from 'react';
 import uniqid from 'uniqid';
 import '../../App.css';
 
+type IngredientListProps = {
+  formIngredients: string[];
+  children: React.ReactChild | React.ReactChild[];
+}
 
-export default function IngredientList({formIngredients}) {
+const IngredientList = ({ formIngredients }: IngredientListProps): JSX.Element => {
   return (
     <div>
       {formIngredients.map((ingredient, index) =>
@@ -12,3 +16,5 @@ export default function IngredientList({formIngredients}) {
     </div>
   )
 }
+
+export default IngredientList;

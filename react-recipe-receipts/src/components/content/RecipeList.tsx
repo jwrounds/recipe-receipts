@@ -3,23 +3,26 @@ import RecipeCard from './RecipeCard';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import TitleCard from './TitleCard';
+import { RecipeModel } from '../../models/RecipeModel';
 
+type RecipeListProps = {
+  list: RecipeModel[];
+  
+}
 
-export default function RecipeList(props) {
+const RecipeList = ({ list }: RecipeListProps): JSX.Element => {
   return (
     <>
       <TitleCard title="Our Latest Recipes." tagline="Go ahead. Be adventurous."/>
       <Container>
         <div className="recipe-container">
           <div className="card-container">
-            {props.list.map((recipe) =>
+            {list.map((recipe) =>
               <div key={recipe.id}>
                 <Link to={`/recipes/${recipe.id}`}>
                 <RecipeCard 
-                            id={recipe.id} 
                             name={recipe.name} 
-                            description={recipe.description} 
-                            onRecipeClick={props.onRecipeClick} />
+                            description={recipe.description} />
                 </Link>
               </div>
             )}
@@ -28,5 +31,6 @@ export default function RecipeList(props) {
       </Container>
     </>
   );
-  
 }
+
+export default RecipeList;

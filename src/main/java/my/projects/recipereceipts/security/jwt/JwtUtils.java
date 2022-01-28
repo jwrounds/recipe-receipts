@@ -3,13 +3,12 @@ package my.projects.recipereceipts.security.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
+import io.jsonwebtoken.security.SecurityException;
 import my.projects.recipereceipts.security.authentication.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-
 
 import java.security.Key;
 import java.util.Date;
@@ -47,7 +46,7 @@ public class JwtUtils {
         try {
             Jwts.parserBuilder().setSigningKey(jwtConfig.getSecretKey()).build().parseClaimsJws(authToken);
             return true;
-        } catch (SignatureException error) {
+        } catch (SecurityException error) {
             logger.error("JWT signature invalid: {}", error.getMessage());
         } catch (MalformedJwtException error) {
             logger.error("JWT token invalid: {}", error.getMessage());

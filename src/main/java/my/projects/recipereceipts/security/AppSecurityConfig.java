@@ -57,8 +57,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
         http.exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/", "/api/test/all", "/api/recipe", "/api/recipe/view/{id}", "/api/auth/**", "/api/test/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/recipe/add").hasAnyRole(ERole.ROLE_USER.name(), ERole.ROLE_ADMIN.name());
+        http.authorizeRequests().antMatchers("/", "/api/recipe/add", "/api/recipe", "/api/recipe/view/{id}", "/api/auth/**", "/api/test/**").permitAll();
+        //http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/recipe/add").hasAnyRole(ERole.ROLE_USER.name(), ERole.ROLE_ADMIN.name());
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/recipe/{id}").hasAnyRole(ERole.ROLE_ADMIN.name());
         http.authorizeRequests().anyRequest().authenticated();
 

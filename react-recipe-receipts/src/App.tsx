@@ -14,22 +14,14 @@ import RecipeList from './components/content/RecipeList';
 import RecipeFormContainer from './components/forms/RecipeFormContainer';
 import RecipeContainer from './components/content/RecipeContainer';
 import RecipeEdit from './components/forms/RecipeEdit';
+import { RecipeModel } from './models/RecipeModel';
 
-export default function App() { 
+const App = (): JSX.Element => { 
 
-  const recipeTemplate = {
-    name: '',
-    description: '',
-    instructions: '',
-    prepTimeInMinutes: 0,
-    cookTimeInMinutes: 0,
-    ingredientList: []
-  };
-
-  const [recipeInForm, setRecipeInForm] = useState(Object.assign({}, recipeTemplate));
-  const [recipeInEdit, setRecipeInEdit] = useState();
-  const [recipeList, setRecipeList] = useState([]);
-  const [currentRecipe, setCurrentRecipe] = useState();
+  const [recipeInForm, setRecipeInForm] = useState<RecipeModel>(new RecipeModel());
+  const [recipeInEdit, setRecipeInEdit] = useState<RecipeModel>(new RecipeModel());;
+  const [recipeList, setRecipeList] = useState<RecipeModel[]>([]);
+  const [currentRecipe, setCurrentRecipe] = useState<RecipeModel | null>(null);
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -38,20 +30,20 @@ export default function App() {
     }
   })
 
-  async function loadRecipes() {
-    let data = await axios.get('http://localhost:8080/api/recipe')
+  async function loadRecipes(): Promise<void> {
+    let data: RecipeModel[] = await axios.get('http://localhost:8080/api/recipe')
       .then(({ data }) => data);
     setRecipeList(data);
   }
 
-  async function loadRecipe(id) {
-    let data = await axios.get(`http://localhost:8080/api/recipe/view/${id}`)
-      .then(({ data }) => data);
+  async function loadRecipe(id: string): Promise<void> {
+    let data: RecipeModel = await axios.get(`http://localhost:8080/api/recipe/view/${id}`).then(({ data }) => data);
+    console.log(data);
     setCurrentRecipe(data);
     setRecipeInEdit(data);
   }
 
-  async function addRecipe(recipe) {
+  async function addRecipe(recipe: RecipeModel): Promise<void> {
     let response = await axios.post('http://localhost:8080/api/recipe/add', recipe)
     .then((res) => res);
     if (response.status === 201) {
@@ -60,7 +52,7 @@ export default function App() {
     }
   }
 
-  async function updateRecipe(recipe) {
+  async function updateRecipe(recipe: RecipeModel): Promise<void> {
     await axios.put('http://localhost:8080/api/recipe', recipe)
     .then((res) => {
       if (res.status === 200) {
@@ -71,7 +63,7 @@ export default function App() {
     });
   }
 
-  async function deleteRecipe(id) {
+  async function deleteRecipe(id: string) {
     let response = await axios.delete(`http://localhost:8080/api/recipe/${id}`)
     .then((res) => res);
     if (response.status === 204) {
@@ -81,7 +73,7 @@ export default function App() {
   }
 
 
-  function handleFormChange(newRecipe, formType) {
+  function handleFormChange(newRecipe: RecipeModel, formType: string) {
     if (formType === 'add') {
       setRecipeInForm(newRecipe);
     } else if (formType === 'edit') {
@@ -89,10 +81,10 @@ export default function App() {
     }
   }
 
-  function handleFormSubmit(formType) {
+  function handleFormSubmit(formType: string) {
     if (formType === 'add') {
       addRecipe(recipeInForm).then(
-        setRecipeInForm(Object.assign({}, recipeTemplate))
+        () => setRecipeInForm(new RecipeModel())
       );
     } else if (formType === 'edit') {
       updateRecipe(recipeInEdit);
@@ -102,23 +94,26 @@ export default function App() {
   console.log(recipeList);
   
   return (
-    <>
+    <div className="app">
       <Navbar />
       <Routes>
-        <Route exact path="/" element={
+        <Route path="/" element={
           <Landing />} />
-        <Route exact path="/recipes" element={
+        <Route path="/recipes" element={
           <RecipeList 
                     list={recipeList}
-                    onRecipeClick={loadRecipe}/>}/>
+                   // onRecipeClick={loadRecipe}
+                    
+                    />}/>
         <Route path="/recipes/:id" element={
           <RecipeContainer                   
                     getRecipeById={loadRecipe}
                     onDelete={deleteRecipe}
-                    onFormChange={handleFormChange}
-                    onFormSubmit={handleFormSubmit} 
+                   // onFormChange={handleFormChange}
+                    //onFormSubmit={handleFormSubmit} 
                     recipe={currentRecipe}
-                    recipeInForm={recipeInForm} />} />
+                   // recipeInForm={recipeInForm} 
+                    />} />
         <Route path="/recipes/:id/edit" element={ 
           <RecipeEdit 
                     getRecipe={loadRecipe}
@@ -135,7 +130,8 @@ export default function App() {
                     recipe={recipeInForm} />} />
       </Routes>
       <Footer />
-    </>
+    </div> 
   ); 
- 
 }
+
+export default App;

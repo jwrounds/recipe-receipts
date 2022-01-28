@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import TitleCard from '../content/TitleCard';
 
-export default function Landing() {
+const Landing = (): JSX.Element => {
     return (
         <>
             <Header />
@@ -10,3 +10,5 @@ export default function Landing() {
         </>
     )
 }
+
+export default Landing;

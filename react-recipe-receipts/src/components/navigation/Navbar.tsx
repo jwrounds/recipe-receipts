@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function Navbar() {
+const Navbar = (): JSX.Element => {
     return (
       <Nav className="justify-content-end navbar" activeKey="/home">
         <Nav.Item>
@@ -17,3 +17,5 @@ export default function Navbar() {
       </Nav>
     )
 }
+
+export default Navbar;
