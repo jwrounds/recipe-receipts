@@ -9,7 +9,7 @@ A simple recipe blogging project that aims to allow hypothetical users to find, 
 - [ ] Recipe likes
 
 ### Technologies Used ###
-JavaScript
+TypeScript
 <br />
 React
 <br />
