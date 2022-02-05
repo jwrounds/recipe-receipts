@@ -11,6 +11,7 @@ type RecipeListProps = {
 }
 
 const RecipeList = ({ list }: RecipeListProps): JSX.Element => {
+
   return (
     <>
       <TitleCard title="Our Latest Recipes." tagline="Go ahead. Be adventurous."/>

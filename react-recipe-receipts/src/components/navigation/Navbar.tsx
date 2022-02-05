@@ -14,6 +14,12 @@ const Navbar = (): JSX.Element => {
         <Nav.Item>
           <Link to="/add">Add Recipe</Link>
         </Nav.Item>
+        <Nav.Item>
+          <Link to="/auth/login">Login</Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Link to="/auth/signup">Signup</Link>
+        </Nav.Item>
       </Nav>
     )
 }
